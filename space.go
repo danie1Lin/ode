@@ -70,6 +70,24 @@ func cToSpace(c C.dSpaceID) Space {
 	return s
 }
 
+func CToSpace(c C.dSpaceID) Space {
+	base := SpaceBase(unsafe.Pointer(c))
+	var s Space
+	switch int(C.dSpaceGetClass(c)) {
+	case SimpleSpaceClass:
+		s = SimpleSpace{base}
+	case HashSpaceClass:
+		s = HashSpace{base}
+	case QuadTreeSpaceClass:
+		s = QuadTreeSpace{base}
+	case SweepAndPruneSpaceClass:
+		s = SweepAndPruneSpace{base}
+	default:
+		s = base
+	}
+	return s
+}
+
 // NilSpace returns the top level "0" space
 func NilSpace() Space {
 	return SpaceBase(0)

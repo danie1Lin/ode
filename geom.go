@@ -41,6 +41,7 @@ var (
 // Geom represents rigid body geometry.
 type Geom interface {
 	c() C.dGeomID
+	ToSpace() Space
 	Destroy()
 	SetData(data interface{})
 	Data() interface{}
@@ -113,6 +114,12 @@ func cToGeom(c C.dGeomID) Geom {
 
 func (g GeomBase) c() C.dGeomID {
 	return C.dGeomID(unsafe.Pointer(g))
+}
+
+func (g GeomBase) ToSpace() Space {
+	var space Space
+	space = CToSpace(C.dSpaceID(unsafe.Pointer(g)))
+	return space
 }
 
 // Destroy destroys the GeomBase.

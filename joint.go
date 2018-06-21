@@ -157,6 +157,13 @@ func (g JointGroup) Destroy() {
 	C.dJointGroupDestroy(g.c())
 }
 
+func (g JointGroup) C() C.dJointGroupID {
+	return C.dJointGroupID(unsafe.Pointer(g))
+}
+func CToJointGroup(c C.dJointGroupID) JointGroup {
+	return JointGroup(unsafe.Pointer(c))
+}
+
 // Empty removes all joints from the group.
 func (g JointGroup) Empty() {
 	C.dJointGroupEmpty(g.c())

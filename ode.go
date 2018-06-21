@@ -7,6 +7,7 @@ package ode
 import "C"
 
 import (
+	"fmt"
 	"unsafe"
 )
 
@@ -220,6 +221,7 @@ type PolygonList []C.uint
 func Init(initFlags, allocFlags int) {
 	C.dInitODE2(C.uint(initFlags))
 	C.dAllocateODEDataForThread(C.uint(allocFlags))
+	fmt.Println("Daniel's Version ODE")
 }
 
 // Close releases ODE resources.
